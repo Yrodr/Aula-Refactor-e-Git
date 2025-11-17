@@ -13,18 +13,15 @@ public class Calculadora {
     
     public double calcularTotal(double preco, int quantidade, boolean temDesconto, boolean temImposto) {
         double subtotal = preco * quantidade;
-        
-        // Cálculo de desconto
-        if (temDesconto) {
-            if (quantidade > 10) {
-                subtotal = subtotal - (subtotal * 0.15);
-            } else if (quantidade > 5) {
-                subtotal = subtotal - (subtotal * 0.10);
-            } else {
-                subtotal = subtotal - (subtotal * 0.05);
-            }
-        }
-        
+
+        subtotal = CalculoDesconto(quantidade, temDesconto, subtotal);
+
+        subtotal = CalculoImposto(temImposto, subtotal);
+
+        return subtotal;
+    }
+
+    private static double CalculoImposto(boolean temImposto, double subtotal) {
         // Cálculo de imposto
         if (temImposto) {
             if (subtotal > 1000) {
@@ -35,7 +32,20 @@ public class Calculadora {
                 subtotal = subtotal + (subtotal * 0.10);
             }
         }
-        
+        return subtotal;
+    }
+
+    private static double CalculoDesconto(int quantidade, boolean temDesconto, double subtotal) {
+        // Cálculo de desconto
+        if (temDesconto) {
+            if (quantidade > 10) {
+                subtotal = subtotal - (subtotal * 0.15);
+            } else if (quantidade > 5) {
+                subtotal = subtotal - (subtotal * 0.10);
+            } else {
+                subtotal = subtotal - (subtotal * 0.05);
+            }
+        }
         return subtotal;
     }
 }

@@ -12,11 +12,17 @@ package extracaodevariaveis;
 public class CalculadoraPreco {
     
     public double calcularPrecoFinal(double precoBase, int quantidade, double taxaImposto) {
-        return precoBase * quantidade * (1 + taxaImposto) - (precoBase * quantidade * 0.1) + 5.0;
+        double subtotal = precoBase * quantidade;
+        double taxaFixa = 5.0;
+        double calculoImposto = subtotal * (1 + taxaImposto);
+        double calculoDesconto = subtotal * 0.1;
+        return calculoImposto - calculoDesconto + taxaFixa;
     }
     
     public boolean podeAplicarDesconto(double preco, int quantidade, boolean clienteVIP) {
-        return (preco > 100 && quantidade > 5) || (clienteVIP && preco > 50);
+        boolean caomparaPrcoQuant = preco > 100 && quantidade > 5;
+        boolean comparaVipPreco = clienteVIP && preco > 50;
+        return caomparaPrcoQuant || comparaVipPreco;
     }
 }
 
