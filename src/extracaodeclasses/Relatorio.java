@@ -23,18 +23,30 @@ public class Relatorio {
     
     public void imprimir() {
         // Formatação do título
-        String tituloFormatado = "=== " + titulo.toUpperCase() + " ===";
-        System.out.println(tituloFormatado);
-        
+        formatarTitulo();
+
         // Formatação do conteúdo
-        String conteudoFormatado = "  " + conteudo.replace("\n", "\n  ");
-        System.out.println(conteudoFormatado);
-        
+        formatarConteudo();
+
         // Formatação do rodapé
+        formatarRodape();
+    }
+
+    private void formatarRodape() {
         String rodapeFormatado = "--- " + rodape + " ---";
         System.out.println(rodapeFormatado);
     }
-    
+
+    private void formatarConteudo() {
+        String conteudoFormatado = "  " + conteudo.replace("\n", "\n  ");
+        System.out.println(conteudoFormatado);
+    }
+
+    private void formatarTitulo() {
+        String tituloFormatado = "=== " + titulo.toUpperCase() + " ===";
+        System.out.println(tituloFormatado);
+    }
+
     public double calcularTotal(double[] valores) {
         double total = 0;
         for (double valor : valores) {
