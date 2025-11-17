@@ -7,57 +7,63 @@ public class GildedRose {
 
     public void atualizarItens() {
         for (int i = 0; i < item.length; i++) {
-            if (!item[i].name.equals("Aged Brie")
-                    && !item[i].name.equals("Backstage passes to a TAFKAL80ETC concert")
-                    && !item[i].name.equals("Conjured Mana Cake")
-                    && !item[i].name.equals("Eternal Artifact")) {
-                if (item[i].quality > 0) {
-                    if (!item[i].name.equals("Sulfuras, Hand of Ragnaros")) {
+            listaItem atual = item[i];
+            boolean Backstage = !atual.name.equals("Backstage passes to a TAFKAL80ETC concert");
+            boolean manaCake = !atual.name.equals("Conjured Mana Cake");
+            boolean eternalArtifact = !atual.name.equals("Eternal Artifact");
+            boolean Sulfuras = atual.name.equals("Sulfuras, Hand of Ragnaros");
+
+            if (!atual.name.equals("Aged Brie")
+                    && Backstage
+                    && manaCake
+                    && eternalArtifact) {
+                if (atual.quality > 0) {
+                    if (!Sulfuras) {
                         diminuirQualidade(i);
                         // Additional degradation for perishable items
-                        if (item[i].name.contains("Perishable")) {
+                        if (atual.name.contains("Perishable")) {
                             diminuirQualidade(i);
                         }
                     }
                 }
             } else {
-                if (item[i].quality < 50) {
+                if (atual.quality < 50) {
                     aumentarQualidade(i);
-                    if (item[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (item[i].sellIn < 11) {
-                            if (item[i].quality < 50) {
+                    if (atual.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                        if (atual.sellIn < 11) {
+                            if (atual.quality < 50) {
                                 aumentarQualidade(i);
                             }
                         }
-                        if (item[i].sellIn < 6) {
-                            if (item[i].quality < 50) {
+                        if (atual.sellIn < 6) {
+                            if (atual.quality < 50) {
                                 aumentarQualidade(i);
                             }
                         }
-                    } else if (item[i].name.equals("Conjured Mana Cake")) {
+                    } else if (atual.name.equals("Conjured Mana Cake")) {
                         // Conjured items degrade twice as fast
                         aumentarQualidade(i);
-                    } else if (item[i].name.equals("Eternal Artifact")) {
+                    } else if (atual.name.equals("Eternal Artifact")) {
                         // Increases quality over time, but slowly
-                        if (item[i].sellIn % 2 == 0) {
+                        if (atual.sellIn % 2 == 0) {
                             aumentarQualidade(i);
                         }
                     }
                 }
             }
 
-            if (!item[i].name.equals("Sulfuras, Hand of Ragnaros") && !item[i].name.equals("Eternal Artifact")) {
-                item[i].sellIn = item[i].sellIn - 1;
+            if (!Sulfuras && eternalArtifact) {
+                atual.sellIn = atual.sellIn - 1;
             }
 
             atualizaQualidade(i);
 
             // Ensure quality bounds
-            if (item[i].quality > 50 && !item[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                item[i].quality = 50;
+            if (atual.quality > 50 && !Sulfuras) {
+                atual.quality = 50;
             }
-            if (item[i].quality < 0) {
-                item[i].quality = 0;
+            if (atual.quality < 0) {
+                atual.quality = 0;
             }
         }
     }
@@ -79,7 +85,8 @@ public class GildedRose {
                         }
                     }
                 } else {
-                    item[i].quality = item[i].quality - item[i].quality;
+                    //Mudado para receber 0 ao invés de .quality - quality
+                    item[i].quality = 0 ;
                 }
             } else {
                 if (item[i].quality < 50) {
